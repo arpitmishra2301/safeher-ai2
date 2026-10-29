@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6b4bd4">
+<title>SafeHer — SOS & Location</title>
+<style>
+:root{--p:#6b4bd4;--ink:#25233a;--muted:#747187;--bg:#f7f6fc;--red:#df3f61;--line:#e8e5f1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,sans-serif}.wrap{max-width:850px;margin:auto;padding:20px}.head{display:flex;align-items:center;gap:12px;margin-bottom:20px}.logo{width:45px;height:45px;border-radius:14px;background:var(--p);color:white;display:grid;place-items:center;font-size:24px;font-weight:900}.head h1{margin:0;font-size:22px}.head p{margin:2px 0;color:var(--muted);font-size:11px}.notice{padding:13px;background:#fff5df;border:1px solid #f1dfb5;border-radius:12px;font-size:12px;line-height:1.6;margin-bottom:16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:white;border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 8px 22px #25203c08}.card h2{font-size:18px;margin:0 0 7px}.muted{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 14px}.sos{background:linear-gradient(145deg,#6b4bd4,#9277ec);color:white;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:310px}.sos p{color:#eee8ff;font-size:12px;line-height:1.5}.sosbutton{width:130px;height:130px;border-radius:50%;background:white;border:8px solid #ffffff55;color:var(--red);font-size:30px;font-weight:900;cursor:pointer;margin:12px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:43px;border:0;border-radius:10px;padding:11px 13px;font-size:12px;font-weight:800;cursor:pointer;text-decoration:none;text-align:center}.primary{background:var(--p);color:white}.secondary{background:#f0edfa;color:#59488c}.danger{background:var(--red);color:white}.green{background:#e5f7ee;color:#176e49}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.row>*{flex:1}.field{display:grid;gap:5px;margin:12px 0}.field label{font-size:11px;font-weight:800}.field input{padding:12px;border:1px solid var(--line);border-radius:9px;font:inherit;width:100%}.status{padding:11px;background:#f7f6fb;border-radius:10px;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere;margin:10px 0}.status.ok{background:#e8f7ef;color:#176e49}.status.err{background:#fff0f3;color:#a22f4a}.contact{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:9px;border-radius:10px;margin-top:8px}.contact div{flex:1;min-width:0;overflow-wrap:anywhere}.contact strong,.contact small{display:block}.contact strong{font-size:12px}.contact small{font-size:11px;color:var(--muted)}.small{font-size:10px;color:#9995aa;line-height:1.5}.full{width:100%}.hide{display:none}@media(max-width:680px){.wrap{padding:13px}.grid{grid-template-columns:1fr}.sos{min-height:280px}}
+</style>
+</head>
+<body><main class="wrap">
+<header class="head"><div class="logo">S</div><div><h1>SafeHer</h1><p>WOMEN SAFETY · SOS & LOCATION</p></div></header>
+<div class="notice"><b>Read first:</b> This is a web prototype. It cannot silently place calls or send SMS. SOS opens your phone's messaging app with a prepared message; you must tap Send. The location page updates while open, but a shared Google Maps URL is only a snapshot. For a real emergency in India, call 112 directly from your phone.</div>
+<div class="grid">
+<section class="card sos"><div style="font-size:10px;letter-spacing:1px;font-weight:900">EMERGENCY SUPPORT</div><h2 style="font-size:25px;margin-top:10px">Need help?</h2><p>Start SOS to prepare a message for your trusted contact.</p><button id="sos" class="sosbutton">SOS</button><p>No message is sent until you press Send in your messaging app.</p></section>
+<section class="card"><h2>📍 Location</h2><p class="muted">Host this page on HTTPS and allow location permission. Keep the page open to update coordinates.</p><div id="locStatus" class="status">Location not started.</div><div class="row"><button class="btn primary" id="start">Start location</button><button class="btn secondary" id="stop" disabled>Stop</button></div><div class="row"><a class="btn secondary" id="map" href="https://maps.google.com" target="_blank" rel="noopener">Open Google Maps</a><button class="btn secondary" id="share" disabled>Share link</button></div><div class="row"><button class="btn secondary" id="copy" disabled>Copy coordinates</button><button class="btn green" id="test">Test browser support</button></div><p class="small">If location fails on iPhone: open the public HTTPS URL in Safari, tap the aA/menu icon → Website Settings → Location → Allow, then reload.</p></section>
+<section class="card"><h2>♡ Trusted contact</h2><p class="muted">Add one contact for the SOS message. Data stays in this browser.</p><form id="form"><div class="field"><label for="name">Name</label><input id="name" placeholder="Trusted person" required maxlength="60"></div><div class="field"><label for="phone">Phone (10 digits, no +91)</label><input id="phone" type="tel" placeholder="9876543210" inputmode="numeric" autocomplete="tel-national" required maxlength="10"></div><button class="btn primary full" type="submit">Save contact</button></form><div id="contacts"></div><p class="small">If the SMS link is unsupported in your browser, use WhatsApp share or copy the message.</p></section>
+<section class="card"><h2>🚨 Emergency options</h2><p class="muted">This link asks your device to open its dialer. You may need to confirm the call.</p><a class="btn danger full" href="tel:112" id="call112">Call 112 (India)</a><div class="row"><button class="btn secondary" id="sms">Open SMS app</button><button class="btn secondary" id="wa">Open WhatsApp</button></div><div class="status">If tapping Call 112 does nothing on a computer or browser preview, use your phone's native Phone app and dial 112 directly.</div></section>
+</div><p class="small" style="text-align:center;margin-top:20px">SafeHer student project · Not a monitored emergency service</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);let current=null,watch=null,contacts=[];
+try{contacts=JSON.parse(localStorage.getItem('safeher_contacts_fix')||'[]')}catch(e){contacts=[]}
+function status(msg,kind=''){const el=$('locStatus');el.textContent=msg;el.className='status '+kind}
+function save(){try{localStorage.setItem('safeher_contacts_fix',JSON.stringify(contacts))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){let el=$('contacts');el.innerHTML=contacts.length?contacts.map((c,i)=>`<div class="contact"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone)}</small></div><button class="btn secondary" data-del="${i}">Remove</button></div>`).join(''):'<div class="status">No contact saved yet.</div>'}
+$('phone').addEventListener('input',function(){this.value=this.value.replace(/\D/g,'').slice(0,10)});
+$('form').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=$('name').value.trim();
+ const phone=$('phone').value.replace(/\D/g,'');
+ if(!name){alert('Please enter the contact name.');$('name').focus();return}
+ if(!/^\d{10}$/.test(phone)){alert('Enter exactly 10 digits without +91, e.g. 9876543210.');$('phone').focus();return}
+ contacts=[{name,phone}];
+ try {
+   localStorage.setItem('safeher_contacts_fix',JSON.stringify(contacts));
+   contacts=JSON.parse(localStorage.getItem('safeher_contacts_fix')||'[]');
+   render();
+   e.target.reset();
+   alert('Trusted contact saved and shown in the list.');
+ } catch(err) {
+   render();
+   e.target.reset();
+   alert('Contact added for this page session, but browser storage is blocked. Open the HTTPS website in a normal browser tab.');
+ }
+});
+$('contacts').addEventListener('click',e=>{let b=e.target.closest('[data-del]');if(!b)return;contacts.splice(+b.dataset.del,1);save();render()});
+function msg(){let link=current?`https://www.google.com/maps?q=${current.lat},${current.lon}`:'I could not retrieve my current location. Please call me.';return `EMERGENCY: I need help. My current location: ${link}${current?` (coordinates ${current.lat.toFixed(6)}, ${current.lon.toFixed(6)})`:''}. Please contact me now.`}
+function digits(p){return p.replace(/\D/g,'')}
+function openSMS(){if(!contacts.length){alert('Please add a trusted contact first.');$('name').focus();return}let phone=digits(contacts[0].phone);let body=encodeURIComponent(msg());let sep=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?';let url=`sms:${phone}${sep}body=${body}`;window.location.href=url}
+function openWA(){if(!contacts.length){alert('Please add a trusted contact first.');return}let phone=digits(contacts[0].phone);if(phone.length===10)phone='91'+phone;if(phone.startsWith('00'))phone=phone.slice(2);window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg())}`,'_blank','noopener')}
+$('sos').addEventListener('click',()=>{if(!contacts.length){alert('Add a trusted contact first.');$('name').focus();return}if(!confirm('SOS will open your messaging app with a prepared message. You must press Send yourself. Continue?'))return;if(current){openSMS();return}if(!navigator.geolocation){if(confirm('Location is not supported. Open message without location?'))openSMS();return}status('Getting a fresh location for SOS…');navigator.geolocation.getCurrentPosition(pos=>{update(pos);openSMS()},err=>{status('Could not get location. You can still send a message without coordinates.','err');if(confirm('Open message without location?'))openSMS()},{enableHighAccuracy:true,timeout:12000,maximumAge:0})});
+$('sms').addEventListener('click',openSMS);$('wa').addEventListener('click',openWA);
+function update(pos){current={lat:pos.coords.latitude,lon:pos.coords.longitude,accuracy:pos.coords.accuracy};let url=`https://www.google.com/maps?q=${current.lat},${current.lon}`;status(`Location updated: ${current.lat.toFixed(6)}, ${current.lon.toFixed(6)} · approx. ${Math.round(current.accuracy)} m accuracy`,'ok');$('map').href=url;$('share').disabled=false;$('copy').disabled=false}
+function fail(err){const msgs={1:'Permission denied. Allow location for this website in browser settings, then reload.',2:'Location unavailable. Check GPS/network and try outdoors.',3:'Timed out. Try again with a stronger GPS signal.'};status(msgs[err.code]||'Location could not be retrieved.','err');$('start').disabled=false;$('stop').disabled=true;watch=null}
+$('start').addEventListener('click',()=>{if(!navigator.geolocation){status('Geolocation is not supported by this browser.','err');return}if(!window.isSecureContext){status('This page is not in a secure context. Host it on HTTPS or open localhost; file previews often block GPS.','err');return}if(watch!==null)return;$('start').disabled=true;status('Requesting location permission…');watch=navigator.geolocation.watchPosition(update,fail,{enableHighAccuracy:true,maximumAge:1000,timeout:15000});$('stop').disabled=false});
+$('stop').addEventListener('click',()=>{if(watch!==null)navigator.geolocation.clearWatch(watch);watch=null;$('start').disabled=false;$('stop').disabled=true;if(current)status('Updates stopped. Last location is still available to share.','ok')});
+$('share').addEventListener('click',async()=>{if(!current)return;let url=`https://www.google.com/maps?q=${current.lat},${current.lon}`;try{if(navigator.share)await navigator.share({title:'My location',text:'My current location: '+url,url});else{await navigator.clipboard.writeText(url);alert('Google Maps link copied. Paste it into WhatsApp or SMS.')}}catch(e){if(e.name!=='AbortError')prompt('Copy this Google Maps link:',url)}});
+$('copy').addEventListener('click',async()=>{if(!current)return;let txt=`${current.lat}, ${current.lon}`;try{await navigator.clipboard.writeText(txt);alert('Coordinates copied.')}catch(e){prompt('Copy coordinates:',txt)}});
+$('test').addEventListener('click',()=>alert(`Browser: ${navigator.userAgent}\\nSecure context: ${window.isSecureContext}\\nGeolocation API: ${!!navigator.geolocation}\\nShare API: ${!!navigator.share}\\nIf GPS is unavailable, host on HTTPS and allow location permission.`));
+render();
+</script></body></html>
